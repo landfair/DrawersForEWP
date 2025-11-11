@@ -426,7 +426,7 @@ async function handleEnterKey() {
   const newCommentBank = {
     assignmentName: assignmentName,
     comments: [],
-    tags: [], // New user-created drawers start with no tags
+    tags: getBasicTags(), // New user-created drawers start with basic universal tags
     archived: false
   };
   commentBanks.push(newCommentBank);
@@ -468,6 +468,16 @@ async function handleEnterKey() {
 // Generate unique IDs for tags
 function generateId() {
   return Date.now().toString(36) + Math.random().toString(36).substr(2);
+}
+
+// Basic universal tags for new user-created drawers
+function getBasicTags() {
+  return [
+    { id: generateId(), name: 'Important', color: '#e74c3c' },
+    { id: generateId(), name: 'Starred', color: '#f39c12' },
+    { id: generateId(), name: 'To Read', color: '#3498db' },
+    { id: generateId(), name: 'Reference', color: '#9b59b6' }
+  ];
 }
 
 function addComment() {
@@ -699,7 +709,7 @@ function loadData() {
       // Ensure backwards compatibility - add tags to old comment banks
       commentBanks.forEach(bank => {
         if (!bank.tags) {
-          bank.tags = []; // Old user-created drawers start with no tags
+          bank.tags = getBasicTags(); // Old drawers get basic universal tags
         }
         // Add archived property if it doesn't exist
         if (bank.archived === undefined) {
@@ -1415,7 +1425,7 @@ function displayTagFilterBar() {
   const tagFiltersContainer = document.getElementById('tag-filters');
 
   if (!commentBank.tags) {
-    commentBank.tags = [];
+    commentBank.tags = getBasicTags();
   }
 
   if (commentBank.tags.length === 0) {
@@ -1546,7 +1556,7 @@ function displayComments(comments) {
 
   // Ensure tags exist
   if (!commentBank.tags) {
-    commentBank.tags = [];
+    commentBank.tags = getBasicTags();
   }
 
   // Show empty state if no comments
@@ -2143,7 +2153,7 @@ function addNewTag() {
   }
 
   if (!commentBank.tags) {
-    commentBank.tags = [];
+    commentBank.tags = getBasicTags();
   }
 
   commentBank.tags.push({
