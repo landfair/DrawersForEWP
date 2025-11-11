@@ -239,6 +239,16 @@
     <div class="popup-body">
       <label for="assignment-name">Drawer Name</label>
       <input type="text" id="assignment-name" placeholder="e.g., Faculty Resources">
+
+      <div style="margin-top: 16px; padding: 12px; background: var(--background-color); border-radius: 8px; border: 1px solid var(--border-color);">
+        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+          <input type="checkbox" id="gather-tabs-checkbox" style="cursor: pointer;">
+          <span style="color: var(--text-primary); font-size: 0.9rem;">Gather all open tabs into this drawer</span>
+        </label>
+        <p style="margin: 8px 0 0 28px; font-size: 0.8rem; color: var(--text-secondary);">
+          All currently open tabs will be added as cards to this drawer
+        </p>
+      </div>
     </div>
     <div class="popup-buttons">
       <button id="createBankBtn">Create</button>

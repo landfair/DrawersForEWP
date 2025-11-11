@@ -361,6 +361,8 @@ function displayArchivedDrawers() {
 
 function handleEnterKey() {
   const assignmentName = document.getElementById('assignment-name').value;
+  const gatherTabs = document.getElementById('gather-tabs-checkbox').checked;
+
   const newCommentBank = {
     assignmentName: assignmentName,
     comments: [],
@@ -368,12 +370,34 @@ function handleEnterKey() {
     archived: false
   };
   commentBanks.push(newCommentBank);
-  saveData();
-  updateCommentBankList();
+
+  // If gather tabs is checked, collect all open tabs
+  if (gatherTabs) {
+    chrome.tabs.query({}, (tabs) => {
+      // Add each tab as a card
+      tabs.forEach(tab => {
+        newCommentBank.comments.push({
+          title: tab.title,
+          link: tab.url,
+          description: '',
+          tags: []
+        });
+      });
+
+      saveData();
+      updateCommentBankList();
+      openCommentBank(commentBanks.length - 1);
+    });
+  } else {
+    saveData();
+    updateCommentBankList();
+    openCommentBank(commentBanks.length - 1);
+  }
+
   document.getElementById('assignment-name').value = '';
+  document.getElementById('gather-tabs-checkbox').checked = false;
   document.getElementById('popup').style.display = 'none';
   document.getElementById('overlay').style.display = 'none';
-  openCommentBank(commentBanks.length - 1);
 }
 
 // Default tags for new comment banks

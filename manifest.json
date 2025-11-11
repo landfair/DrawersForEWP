@@ -14,7 +14,8 @@
   },
   "permissions": [
     "storage",
-    "sidePanel"
+    "sidePanel",
+    "tabs"
   ],
   "author": "Drawers"
 }
