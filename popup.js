@@ -359,7 +359,50 @@ function displayArchivedDrawers() {
   });
 }
 
-function handleEnterKey() {
+// Extract metadata description from a tab
+async function extractTabMetadata(tabId, url) {
+  try {
+    // Skip chrome:// and other internal URLs
+    if (!url.startsWith('http://') && !url.startsWith('https://')) {
+      return '';
+    }
+
+    const results = await chrome.scripting.executeScript({
+      target: { tabId: tabId },
+      func: () => {
+        // Try to get meta description
+        const metaDesc = document.querySelector('meta[name="description"]');
+        if (metaDesc && metaDesc.content) {
+          return metaDesc.content.trim();
+        }
+
+        // Try Open Graph description
+        const ogDesc = document.querySelector('meta[property="og:description"]');
+        if (ogDesc && ogDesc.content) {
+          return ogDesc.content.trim();
+        }
+
+        // Fallback to first paragraph
+        const firstPara = document.querySelector('p');
+        if (firstPara && firstPara.textContent) {
+          const text = firstPara.textContent.trim();
+          // Limit to 300 characters
+          return text.length > 300 ? text.substring(0, 297) + '...' : text;
+        }
+
+        return '';
+      }
+    });
+
+    return results && results[0] && results[0].result ? results[0].result : '';
+  } catch (error) {
+    // If we can't inject (e.g., chrome store pages, pdf files), return empty
+    console.log('Could not extract metadata from tab:', error);
+    return '';
+  }
+}
+
+async function handleEnterKey() {
   const assignmentName = document.getElementById('assignment-name').value;
   const gatherTabs = document.getElementById('gather-tabs-checkbox').checked;
 
@@ -373,16 +416,21 @@ function handleEnterKey() {
 
   // If gather tabs is checked, collect all open tabs
   if (gatherTabs) {
-    chrome.tabs.query({}, (tabs) => {
-      // Add each tab as a card
-      tabs.forEach(tab => {
-        newCommentBank.comments.push({
+    chrome.tabs.query({}, async (tabs) => {
+      // Extract metadata from each tab
+      const tabPromises = tabs.map(async (tab) => {
+        const description = await extractTabMetadata(tab.id, tab.url);
+        return {
           title: tab.title,
           link: tab.url,
-          description: '',
+          description: description,
           tags: []
-        });
+        };
       });
+
+      // Wait for all metadata extraction to complete
+      const cards = await Promise.all(tabPromises);
+      newCommentBank.comments = cards;
 
       saveData();
       updateCommentBankList();
