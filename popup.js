@@ -403,7 +403,24 @@ async function extractTabMetadata(tabId, url) {
 }
 
 async function handleEnterKey() {
-  const assignmentName = document.getElementById('assignment-name').value;
+  const assignmentName = document.getElementById('assignment-name').value.trim();
+
+  // Check if name is empty
+  if (!assignmentName) {
+    alert('Please enter a drawer name.');
+    return;
+  }
+
+  // Check for duplicate drawer name (case-insensitive, including archived)
+  const duplicateExists = commentBanks.some(bank =>
+    bank.assignmentName.toLowerCase() === assignmentName.toLowerCase()
+  );
+
+  if (duplicateExists) {
+    alert(`A drawer named "${assignmentName}" already exists. Please choose a different name.`);
+    return;
+  }
+
   const gatherTabs = document.getElementById('gather-tabs-checkbox').checked;
 
   const newCommentBank = {
