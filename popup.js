@@ -426,7 +426,7 @@ async function handleEnterKey() {
   const newCommentBank = {
     assignmentName: assignmentName,
     comments: [],
-    tags: getDefaultTags(), // Initialize with default tags
+    tags: [], // New user-created drawers start with no tags
     archived: false
   };
   commentBanks.push(newCommentBank);
@@ -463,25 +463,6 @@ async function handleEnterKey() {
   document.getElementById('gather-tabs-checkbox').checked = false;
   document.getElementById('popup').style.display = 'none';
   document.getElementById('overlay').style.display = 'none';
-}
-
-// Default tags for new comment banks
-function getDefaultTags() {
-  return [
-    { id: generateId(), name: 'Evidence', color: '#3498DB' },
-    { id: generateId(), name: 'Organization', color: '#2ECC71' },
-    { id: generateId(), name: 'Intro', color: '#9B59B6' },
-    { id: generateId(), name: 'Conclusion', color: '#8E44AD' },
-    { id: generateId(), name: 'Voice', color: '#E74C3C' },
-    { id: generateId(), name: 'Praise', color: '#FFD700' },
-    { id: generateId(), name: 'Critical', color: '#E67E22' },
-    { id: generateId(), name: 'Salutation', color: '#1ABC9C' },
-    { id: generateId(), name: 'Valediction', color: '#16A085' },
-    { id: generateId(), name: 'Stakes', color: '#C0392B' },
-    { id: generateId(), name: 'Problem', color: '#D35400' },
-    { id: generateId(), name: 'Ethos', color: '#34495E' },
-    { id: generateId(), name: 'Sayback', color: '#27AE60' }
-  ];
 }
 
 // Generate unique IDs for tags
@@ -718,7 +699,7 @@ function loadData() {
       // Ensure backwards compatibility - add tags to old comment banks
       commentBanks.forEach(bank => {
         if (!bank.tags) {
-          bank.tags = getDefaultTags();
+          bank.tags = []; // Old user-created drawers start with no tags
         }
         // Add archived property if it doesn't exist
         if (bank.archived === undefined) {
@@ -1434,7 +1415,7 @@ function displayTagFilterBar() {
   const tagFiltersContainer = document.getElementById('tag-filters');
 
   if (!commentBank.tags) {
-    commentBank.tags = getDefaultTags();
+    commentBank.tags = [];
   }
 
   if (commentBank.tags.length === 0) {
@@ -1565,7 +1546,7 @@ function displayComments(comments) {
 
   // Ensure tags exist
   if (!commentBank.tags) {
-    commentBank.tags = getDefaultTags();
+    commentBank.tags = [];
   }
 
   // Show empty state if no comments
