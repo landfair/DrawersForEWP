@@ -1,0 +1,110 @@
+{
+  "archived": false,
+  "assignmentName": "Handouts",
+  "comments": [
+    {
+      "description": "Mark Gaipa's cartoon sketches describe ways students can orient themselves with their sources.",
+      "link": "https://docs.google.com/document/d/1fWTqDmIJxOEcQXPln5LZ9zgpVPfIwtNQ/edit?usp=sharing&ouid=114539023273531819441&rtpof=true&sd=true",
+      "tags": [],
+      "title": "8 Strategies for Critically Engaging Secondary Sources"
+    },
+    {
+      "description": "Some templates that model ways to engage critically with texts",
+      "link": "https://docs.google.com/document/d/1QnArCHLJzb0cH7W18zLVjXENTbf_Svg1/edit?usp=sharing&ouid=114539023273531819441&rtpof=true&sd=true",
+      "tags": [
+        "mhrtpntfn456fml0vk"
+      ],
+      "title": "Critical Moves: Ways of Critically Assessing Texts"
+    },
+    {
+      "description": "A handout that provides models of sentences that describe or establish a writers motivations for research, argumentation, or close-reading.",
+      "link": "https://docs.google.com/document/d/1_lZoqLrp3qdkeNwZ5RsDNafeOh524pNOOEwV-5akdQU/edit?usp=sharing",
+      "tags": [],
+      "title": "Motivating Sentences"
+    },
+    {
+      "description": "Excerpts from Booth's The Craft of Research (2008).",
+      "link": "https://docs.google.com/document/d/1bdV72xn8aMBkrXG-r1sDmHFSSYDA9z8MY4dMvZvPY9U/edit?usp=sharing",
+      "tags": [],
+      "title": "Establishing a Line of Inquiry"
+    },
+    {
+      "description": "Handout teaching textual incorporation in order to avoid plagiarism",
+      "link": "https://docs.google.com/document/d/1Hik9ojEPym7LAL1TFf_X7KyIIke7adbD8K_hxG1ibyQ/edit?usp=sharing",
+      "tags": [],
+      "title": "Textual Incorporation"
+    },
+    {
+      "description": "This handout from Jono Mischkot teaches students how to incorporate and engage with textual evidence.",
+      "link": "https://docs.google.com/document/d/1fN_9NlaQUlL6gH0aoOVAfNYo9KK8hkPNhkiSRUUEw7E/edit?usp=sharing",
+      "tags": [
+        "mhscsodcdaeay6chs6"
+      ],
+      "title": "Engaging with Evidence"
+    },
+    {
+      "description": "Generate handouts for a close-reading activity that asks students to \"unjumble\" sentences in a paragraph.",
+      "link": "https://landfair.github.io/AnalogUnJumble/",
+      "tags": [],
+      "title": "UnJumble Worksheet Generator"
+    },
+    {
+      "description": "Generate and print \"says/does\" activity for developing close reading and metacognitive skills",
+      "link": "https://landfair.github.io/saysdoes/",
+      "tags": [],
+      "title": "Says/Does Worksheet Generator"
+    }
+  ],
+  "tags": [
+    {
+      "color": "#9b59b6",
+      "id": "mhrtpntffpc9pervcjt",
+      "name": "Style Guide"
+    },
+    {
+      "color": "#3498db",
+      "id": "mhrtpntfn456fml0vk",
+      "name": "Templates"
+    },
+    {
+      "color": "#2ecc71",
+      "id": "mhrtpntfnrid00we6hk",
+      "name": "Examples"
+    },
+    {
+      "color": "#e67e22",
+      "id": "mhrtpntf09h7nxub9md2",
+      "name": "Rubrics"
+    },
+    {
+      "color": "#e74c3c",
+      "id": "mhrtpntfkpd37rpxayj",
+      "name": "Important"
+    },
+    {
+      "color": "#3498db",
+      "id": "mhrtpntf2sb62sgnpvg",
+      "name": "To Read"
+    },
+    {
+      "color": "#9b59b6",
+      "id": "mhrtpntfyyaerrbg7zi",
+      "name": "Reference"
+    },
+    {
+      "color": "#2ecc71",
+      "id": "mhrtpntf1ldi8pl488u",
+      "name": "Current Semester"
+    },
+    {
+      "color": "#95a5a6",
+      "id": "mhrtpntfa7cfpeibaxv",
+      "name": "Archive"
+    },
+    {
+      "color": "#6b2d8f",
+      "id": "mhscsodcdaeay6chs6",
+      "name": "Mischkot"
+    }
+  ]
+}

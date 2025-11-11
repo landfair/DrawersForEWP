@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Drawers</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header class="header">
+    <div class="logo-container">
+      <img src="https://i.imgur.com/iIODsNl.png" alt="Logo" class="logo-img" id="headerLogo">
+    </div>
+    <button class="btn-icon-compact header-back-btn" id="backToHomeBtn" title="Back to Home" style="display: none;">←</button>
+    <div class="header-title">
+      <h1 id="main-title">Drawers</h1>
+      <h2 id="assignment-heading" style="display: none;"></h2>
+    </div>
+    <div class="header-buttons">
+      <!-- Options Dropdown -->
+      <div class="options-dropdown">
+        <button class="toggle-btn" id="optionsDropdownBtn" title="Options">∨</button>
+        <div class="options-dropdown-menu" id="optionsDropdownMenu">
+          <button class="dropdown-item" id="aboutBtn">About</button>
+          <button class="dropdown-item" id="uploadBtn">Upload Drawer</button>
+          <button class="dropdown-item" id="downloadBtn">Download Drawer</button>
+          <button class="dropdown-item" id="deleteBtn">Delete Drawer(s)</button>
+          <button class="dropdown-item" id="resetBtn">Reset All Data</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div id="overlay" class="overlay"></div>
+
+  <div class="container">
+
+      <div id="delete-popup" class="popup">
+        <div class="popup-header">
+          <h2>Select Drawers to Delete</h2>
+        </div>
+        <div class="popup-body">
+          <div id="delete-checkboxes"></div>
+        </div>
+        <div class="popup-buttons">
+          <button id="confirmDeleteBtn">Delete</button>
+          <button id="cancelDeleteBtn">Cancel</button>
+        </div>
+      </div>
+
+      <div id="confirm-delete-popup" class="popup">
+        <div class="popup-header">
+          <h2>Confirm Delete</h2>
+        </div>
+        <div class="popup-body">
+          <p>Are you sure you want to delete the selected drawers?</p>
+        </div>
+        <div class="popup-buttons">
+          <button id="yesDeleteBtn">Yes, delete them</button>
+          <button id="noDeleteBtn">No, cancel</button>
+        </div>
+      </div>
+
+      <div id="download-popup" class="popup">
+        <div class="popup-header">
+          <h2>Download Drawers</h2>
+        </div>
+        <div class="popup-body">
+          <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 16px;">
+            Select one or more drawers to download. Each will be saved as a separate file.
+          </p>
+          <div id="download-options" class="download-options-grid"></div>
+        </div>
+        <div class="popup-buttons">
+          <button id="downloadConfirmBtn">Download Selected</button>
+          <button id="cancelDownloadBtn">Cancel</button>
+        </div>
+      </div>
+
+      <div id="upload-popup" class="popup">
+        <div class="popup-header">
+          <h2>Upload Drawers</h2>
+        </div>
+        <div class="popup-body">
+          <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 16px;">
+            Select one or more .drawer files to upload. You can select multiple files at once.
+          </p>
+          <div class="upload-area">
+            <input type="file" id="upload-input" accept=".drawer" multiple>
+            <label for="upload-input" class="upload-label">
+              <div class="upload-icon">📁</div>
+              <div class="upload-text">Click to select files or drag and drop</div>
+              <div class="upload-hint">Supports .drawer files</div>
+            </label>
+            <div id="selected-files" class="selected-files"></div>
+          </div>
+        </div>
+        <div class="popup-buttons">
+          <button id="uploadConfirmBtn">Upload Selected</button>
+          <button id="cancelUploadBtn">Cancel</button>
+        </div>
+      </div>
+
+      <div id="archive-confirm-popup" class="popup">
+        <div class="popup-header">
+          <h2>Archive or Delete?</h2>
+        </div>
+        <div class="popup-body">
+          <p id="archive-drawer-name" style="font-weight: 600; color: var(--text-primary); margin-bottom: 12px;"></p>
+          <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 16px;">
+            Archive this drawer to hide it from your main view (you can restore it later), or permanently delete it.
+          </p>
+        </div>
+        <div class="popup-buttons">
+          <button id="confirmArchiveBtn" class="btn-archive">📦 Archive</button>
+          <button id="confirmDeleteFromArchiveBtn" class="btn-delete">🗑 Delete</button>
+          <button id="cancelArchiveBtn">Cancel</button>
+        </div>
+      </div>
+
+      <div id="about-popup" class="popup about-modal">
+        <div class="popup-header">
+          <h2>About Drawers</h2>
+        </div>
+        <div class="popup-body">
+          <div class="about-section">
+            <h3 class="about-heading">The Problem with Traditional Bookmarks</h3>
+            <p class="about-text">
+              Browser bookmarks were designed for casual web browsing, not professional knowledge management. They fall short in several critical ways:
+            </p>
+            <ul class="about-list">
+              <li><strong>Chaotic Organization:</strong> Bookmarks pile up in folders with no clear structure, making it difficult to find what you need when you need it.</li>
+              <li><strong>No Context:</strong> A URL and title aren't enough. You can't add descriptions, notes, or explanations about why a resource matters.</li>
+              <li><strong>Trapped in Your Browser:</strong> Bookmarks are isolated to one browser on one device. Sharing a collection means tedious exports and imports.</li>
+              <li><strong>No Tagging or Filtering:</strong> You're stuck with rigid folder hierarchies. You can't tag resources or filter by multiple criteria.</li>
+              <li><strong>Dead Links Accumulate:</strong> Old bookmarks break over time, cluttering your system with outdated resources you'll never use.</li>
+            </ul>
+          </div>
+
+          <div class="about-section">
+            <h3 class="about-heading">How Drawers Solves This</h3>
+            <p class="about-text">
+              Drawers reimagines bookmarking as a <strong>contextual knowledge management system</strong> designed specifically for educators and professionals who need to organize, annotate, and share resources effectively.
+            </p>
+
+            <div class="feature-grid">
+              <div class="feature-item">
+                <div class="feature-icon">🗂️</div>
+                <div class="feature-content">
+                  <h4 class="feature-title">Organized Drawers</h4>
+                  <p class="feature-desc">Group resources by project, course, or topic. Each drawer is a self-contained collection with its own cards.</p>
+                </div>
+              </div>
+
+              <div class="feature-item">
+                <div class="feature-icon">📝</div>
+                <div class="feature-content">
+                  <h4 class="feature-title">Rich Context</h4>
+                  <p class="feature-desc">Add titles, descriptions, and links to each card. Explain why the resource matters and how to use it.</p>
+                </div>
+              </div>
+
+              <div class="feature-item">
+                <div class="feature-icon">🏷️</div>
+                <div class="feature-content">
+                  <h4 class="feature-title">Flexible Tagging</h4>
+                  <p class="feature-desc">Create custom tags and apply multiple tags to each card. Filter and find resources instantly.</p>
+                </div>
+              </div>
+
+              <div class="feature-item">
+                <div class="feature-icon">🔍</div>
+                <div class="feature-content">
+                  <h4 class="feature-title">Powerful Search</h4>
+                  <p class="feature-desc">Search across all drawers and cards instantly. Find resources by title, description, or link.</p>
+                </div>
+              </div>
+
+              <div class="feature-item">
+                <div class="feature-icon">📤</div>
+                <div class="feature-content">
+                  <h4 class="feature-title">Easy Sharing</h4>
+                  <p class="feature-desc">Export drawers as .drawer files and share entire collections with colleagues in seconds.</p>
+                </div>
+              </div>
+
+              <div class="feature-item">
+                <div class="feature-icon">📦</div>
+                <div class="feature-content">
+                  <h4 class="feature-title">Archive Old Content</h4>
+                  <p class="feature-desc">Archive outdated drawers to keep your workspace clean while preserving them for future reference.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="about-section about-footer">
+            <p class="about-version">Version 1.0</p>
+            <p class="about-tagline">Built for educators, researchers, and knowledge workers who deserve better than browser bookmarks.</p>
+          </div>
+        </div>
+        <div class="popup-buttons">
+          <button id="closeAboutBtn">Close</button>
+        </div>
+      </div>
+
+    <div id="landing-container">
+        <div class="drawer-search-container">
+          <div class="search-input-wrapper">
+            <input type="text" id="drawer-search" class="drawer-search-input" placeholder="Search drawers and cards...">
+            <button class="search-clear-btn" id="drawer-search-clear" style="display: none;" title="Clear search">×</button>
+          </div>
+        </div>
+
+        <div id="comment-bank-list" class="comment-banks">
+            <div class="add-comment-bank">
+              <button class="add-button" id="addCommentBankBtn">+ Add Drawer</button>
+            </div>
+          </div>
+          <p class="no-comment-banks" id="no-comment-banks-message">No drawers created yet.</p>
+        </div>
+      </div>
+
+      <div id="clear-data-popup" class="popup">
+        <div class="popup-header">
+          <h2>Are you sure you want to erase your data?</h2>
+        </div>
+        <div class="popup-buttons">
+          <button id="yesClearBtn">Yes, let's erase it all!</button>
+          <button id="noClearBtn">No, never mind.</button>
+        </div>
+      </div>
+
+  <div id="popup" class="popup">
+    <div class="popup-header">
+      <h2>New Drawer</h2>
+    </div>
+    <div class="popup-body">
+      <label for="assignment-name">Drawer Name</label>
+      <input type="text" id="assignment-name" placeholder="e.g., Faculty Resources">
+    </div>
+    <div class="popup-buttons">
+      <button id="createBankBtn">Create</button>
+      <button id="cancelBankBtn">Cancel</button>
+    </div>
+  </div>
+
+  </div> <!-- End container -->
+
+  <!-- Comment Bank Container (Full Width) -->
+  <div id="comment-container" class="comment-container">
+    <!-- Sticky Header Wrapper -->
+    <div class="comment-header-wrapper">
+      <!-- Action Toolbar -->
+      <div class="comment-actions">
+        <div class="comment-search-wrapper">
+          <input type="text" id="comment-search" class="comment-search-input" placeholder="Search cards...">
+          <button class="search-clear-btn" id="comment-search-clear" style="display: none;" title="Clear search">×</button>
+        </div>
+        <button class="btn-compact" id="manageTagsBtn" title="Manage Tags">🏷️</button>
+        <button class="btn-compact" id="copySelectedBtn" title="Copy Selected">📋</button>
+        <button class="btn-compact btn-primary-compact" id="addCommentBtn" title="Add Card">+</button>
+      </div>
+
+      <!-- Tag Filter Bar -->
+      <div class="tag-filter-bar" id="tag-filter-bar">
+        <div class="tag-filter-header">
+          <button class="toggle-filters-btn" id="toggle-filters-btn" title="Toggle filters">▼</button>
+          <span class="filter-count" id="filter-count"></span>
+          <button class="deselect-all-btn" id="deselect-all-btn" style="display: none;">Deselect All</button>
+          <button class="clear-filters-btn" id="clear-filters-btn" style="display: none;">Clear</button>
+        </div>
+        <div class="tag-filters" id="tag-filters"></div>
+      </div>
+    </div>
+
+    <!-- Comments List -->
+    <div class="comments-list-wrapper">
+      <div id="comments-list"></div>
+    </div>
+  </div>
+
+  <!-- Archive Container (shows archived drawers) -->
+  <div id="archive-container" class="archive-container" style="display: none;">
+    <div class="archive-header-wrapper">
+      <p style="color: var(--text-secondary); font-size: 0.85rem; padding: 16px; margin: 0; background: var(--background-color); border-bottom: 1px solid var(--border-color);">
+        Archived drawers are hidden from the main view. Click a drawer to restore or delete it.
+      </p>
+    </div>
+    <div class="archived-drawers-list-wrapper">
+      <div id="archived-drawers-list"></div>
+    </div>
+  </div>
+
+  <!-- Modals that need to work when viewing cards (outside container) -->
+  <!-- Tag Management Modal -->
+  <div id="tag-manager-popup" class="popup tag-manager">
+    <div class="popup-header">
+      <h2>Manage Tags</h2>
+    </div>
+    <div class="popup-body">
+      <p style="color: var(--text-secondary); font-size: 0.8rem; margin-bottom: 12px;">Create custom tags to organize your cards. You can apply multiple tags to each card.</p>
+
+      <div class="tag-list" id="tag-list"></div>
+
+      <div class="tag-form">
+        <div class="tag-form-row">
+          <div class="tag-form-group">
+            <label>Tag Name</label>
+            <input type="text" id="new-tag-name" placeholder="e.g., Important, To Read, Resources">
+          </div>
+          <div class="tag-form-group tag-color-group">
+            <label>Color</label>
+            <input type="color" id="new-tag-color" value="#6b2d8f">
+          </div>
+        </div>
+        <button class="btn-primary" id="addTagBtn">+ Add Tag</button>
+      </div>
+    </div>
+
+    <div class="popup-buttons">
+      <button id="doneTagsBtn">Done</button>
+    </div>
+  </div>
+
+  <div id="add-comment-popup" class="popup add-comment-modal">
+    <div class="popup-header">
+      <h2 id="comment-modal-title">New Card</h2>
+    </div>
+    <div class="popup-body">
+      <label for="card-title">Title</label>
+      <input type="text" id="card-title" placeholder="Enter card title...">
+
+      <label for="card-link">Link</label>
+      <input type="url" id="card-link" placeholder="Enter URL...">
+
+      <label for="card-description">Description</label>
+      <textarea id="card-description" placeholder="Enter card description..."></textarea>
+
+      <div class="modal-tags-section">
+        <label>Tags (optional)</label>
+        <div class="modal-tags-container" id="modal-tags-container">
+          <span class="no-tags-message">No tags available</span>
+        </div>
+      </div>
+    </div>
+    <div class="popup-buttons">
+      <button id="saveCommentBtn">Save Card</button>
+      <button id="cancelCommentBtn">Cancel</button>
+    </div>
+  </div>
+
+  <div id="duplicate-card-popup" class="popup">
+    <div class="popup-header">
+      <h2>Duplicate Card</h2>
+    </div>
+    <div class="popup-body">
+      <p id="duplicate-card-title" style="font-weight: 600; color: var(--text-primary); margin-bottom: 12px;"></p>
+      <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 12px;">
+        Select which drawer to duplicate this card to:
+      </p>
+      <div id="duplicate-drawer-list" class="duplicate-drawer-list"></div>
+    </div>
+    <div class="popup-buttons">
+      <button id="cancelDuplicateBtn">Cancel</button>
+    </div>
+  </div>
+
+  <!-- Global Tag Picker Dropdown (shared by all comments) -->
+  <div id="global-tag-picker" class="tag-picker-menu" style="display: none;"></div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

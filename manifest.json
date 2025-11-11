@@ -1,0 +1,20 @@
+{
+  "manifest_version": 3,
+  "name": "Drawers",
+  "version": "1.0.0",
+  "description": "A powerful bookmarking and resource organization tool for educators to manage links, documents, and teaching materials.",
+  "action": {
+    "default_title": "Drawers"
+  },
+  "side_panel": {
+    "default_path": "popup.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [
+    "storage",
+    "sidePanel"
+  ],
+  "author": "Drawers"
+}
