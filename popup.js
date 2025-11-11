@@ -1665,6 +1665,14 @@ function displayComments(comments) {
       ? `<button class="copy-link-btn" data-index="${index}" data-link="${displayLink}" title="Copy link">🔗</button>`
       : '';
 
+    // Build description HTML with expand/collapse functionality
+    const descriptionHTML = displayDescription ? `
+      <div class="card-description-wrapper">
+        <div class="card-description-display collapsed" data-card-index="${index}">${displayDescription}</div>
+        <button class="description-toggle" data-card-index="${index}" style="display: none;">...</button>
+      </div>
+    ` : '';
+
     commentElement.innerHTML = `
       <!-- Comment Header -->
       <div class="comment-header">
@@ -1685,7 +1693,7 @@ function displayComments(comments) {
           <div class="card-title-display">${titleHTML}</div>
           ${copyLinkButton}
         </div>
-        ${displayDescription ? `<div class="card-description-display">${displayDescription}</div>` : ''}
+        ${descriptionHTML}
       </div>
 
       <!-- Comment Footer -->
@@ -1767,6 +1775,36 @@ function displayComments(comments) {
           }, 800);
         });
       });
+    }
+
+    // Description expand/collapse functionality
+    const descriptionDiv = commentElement.querySelector('.card-description-display');
+    const toggleBtn = commentElement.querySelector('.description-toggle');
+
+    if (descriptionDiv && toggleBtn) {
+      // Check if description overflows (more than 3 lines)
+      // Wait for next tick to ensure element is rendered
+      setTimeout(() => {
+        const lineHeight = parseFloat(getComputedStyle(descriptionDiv).lineHeight);
+        const maxHeight = lineHeight * 3; // 3 lines
+
+        if (descriptionDiv.scrollHeight > maxHeight) {
+          // Description is long enough to need toggle
+          toggleBtn.style.display = 'inline-block';
+
+          toggleBtn.addEventListener('click', function() {
+            const isCollapsed = descriptionDiv.classList.contains('collapsed');
+
+            if (isCollapsed) {
+              descriptionDiv.classList.remove('collapsed');
+              toggleBtn.textContent = 'Show less';
+            } else {
+              descriptionDiv.classList.add('collapsed');
+              toggleBtn.textContent = '...';
+            }
+          });
+        }
+      }, 0);
     }
   });
 

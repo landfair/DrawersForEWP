@@ -1265,12 +1265,47 @@ input, button {
   color: var(--primary-color);
 }
 
+.card-description-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
 .card-description-display {
   font-size: 0.85rem;
   line-height: 1.5;
   color: var(--text-secondary);
   white-space: pre-wrap;
   word-wrap: break-word;
+  transition: max-height 0.3s ease;
+}
+
+.card-description-display.collapsed {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+}
+
+.description-toggle {
+  align-self: flex-start;
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--primary-color);
+  font-size: 0.75rem;
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  font-weight: 500;
+  margin-top: 2px;
+}
+
+.description-toggle:hover {
+  background: var(--accent-purple-lightest);
+  border-color: var(--primary-color);
 }
 
 .search-highlight {
